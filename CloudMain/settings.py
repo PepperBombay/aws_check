@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'aws_subnet_check',
     'iam_policy',
+    'aws_ec2_SecurityGroup',
 ]
 
 MIDDLEWARE = [
