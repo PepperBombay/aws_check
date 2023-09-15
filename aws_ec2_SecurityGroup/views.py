@@ -25,5 +25,5 @@ def get_security_group_info(request, security_group_id):
 
         return JsonResponse(data)
     except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)  # 서버 오류 응답
+        return JsonResponse({'error': str(e)}, status=500)  
 
