@@ -15,10 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from aws_subnet_check import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('aws-subnet-check/<str:vpc_id>/<str:aws_region>/', views.check_vpc_subnets, name='check_vpc_subnets'),
+    path('iam_policy/', include('iam_policy.urls')),
 ]
