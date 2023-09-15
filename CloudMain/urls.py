@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from aws_subnet_check import views
+from aws_subnet_check import views, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('aws-subnet-check/<str:vpc_id>/<str:aws_region>/', views.check_vpc_subnets, name='check_vpc_subnets'),
+    path('iam_policy/', include('iam_policy.urls')),
 ]
