@@ -1,5 +1,5 @@
 """
-URL configuration for aws_subnet_check_project project.
+URL configuration for CloudMain project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -15,11 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from aws_subnet_check import views
+from django.urls import path, include #신민규 include부분 추가
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('aws-subnet-check/<str:vpc_id>/<str:aws_region>/', views.check_vpc_subnets, name='check_vpc_subnets'),
-    #path('result/<int:report_id>/', views.show_result, name='show_result'),
+    path('iam_policy/', include('iam_policy.urls')),    #신민규 iam정책 추가
 ]
