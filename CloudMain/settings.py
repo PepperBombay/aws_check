@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'aws_subnet_check',
-    'iam_policy',
+    'aws_iam_policy',
     'aws_ec2_SecurityGroup',
     'aws_s3_PublicAccess',
     'aws_ec2_SecurityGroup'

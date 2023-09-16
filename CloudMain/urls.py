@@ -21,7 +21,7 @@ from aws_subnet_check import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('aws-subnet-check/<str:vpc_id>/<str:aws_region>/', views.check_vpc_subnets, name='check_vpc_subnets'),
-    path('iam_policy/', include('iam_policy.urls')),
+    path('aws_iam_policy/', include('aws_iam_policy.urls')),
     path('aws_s3_PublicAccess/', include('aws_s3_PublicAccess.urls')),
     path('aws_ec2_SecurityGroup/', include('aws_ec2_SecurityGroup.urls'))
 ]
