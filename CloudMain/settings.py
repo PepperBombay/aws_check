@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'aws_subnet_check',
     'iam_policy',
     'aws_ec2_SecurityGroup',
+    'aws_s3_PublicAccess',
 ]
 
 MIDDLEWARE = [
