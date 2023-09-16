@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'iam_policy',
     'aws_ec2_SecurityGroup',
     'aws_s3_PublicAccess',
+    'aws_ec2_SecurityGroup'
 ]
 
 MIDDLEWARE = [
