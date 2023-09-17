@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('security', '0001_initial'),
+        ('aws_ec2_SecurityGroup', '0001_initial'),
     ]
 
     operations = [
