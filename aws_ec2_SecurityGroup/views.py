@@ -1,13 +1,22 @@
 import boto3
-from django.http import JsonResponse  # JSON 응답 반환
+from django.http import JsonResponse
 
-def get_security_group_info(request, security_group_id):
+def get_security_group_info(request, instance_id):
     try:
         ec2_client = boto3.client('ec2', region_name='ap-northeast-2')
 
+        # 인스턴스 ID를 사용하여 보안 그룹 ID 가져오기
+        response = ec2_client.describe_instances(InstanceIds=[instance_id])
+        security_group_ids = []
+
+        if 'Reservations' in response:
+            for reservation in response['Reservations']:
+                for instance in reservation['Instances']:
+                    for sg in instance['SecurityGroups']:
+                        security_group_ids.append(sg['GroupId'])
+
         # 보안 그룹 정보 가져오기
-        response = ec2_client.describe_security_groups(GroupIds=[security_group_id])
-        security_group = response['SecurityGroups'][0]
+        security_group = ec2_client.describe_security_groups(GroupIds=security_group_ids)['SecurityGroups'][0]
 
         # 정보 추출
         group_id = security_group['GroupId']
@@ -25,5 +34,4 @@ def get_security_group_info(request, security_group_id):
 
         return JsonResponse(data)
     except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)  
-
+        return JsonResponse({'error': str(e)}, status=500)
