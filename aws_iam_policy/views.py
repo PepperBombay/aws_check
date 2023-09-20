@@ -22,9 +22,6 @@ def Root_MFA_Check(request):
     if not existing_policies:
         # IAM 정책 생성(response에 생성에 대한 응답을 저장)
         response = iam.create_policy(PolicyName, PolicyDocument=json.dumps(policy_document))  # JSON 형식으로 변환
-        message = f"정책 '{PolicyName}'이 생성되었습니다.<br>"
-    else:
-        message = f"정책 '{PolicyName}'이 이미 존재합니다.<br>"
 
     # 유저 정보를 가져옵니다 (root인지 확인하기 위함)
     current_user = iam.get_user()
