@@ -24,7 +24,7 @@ def check_vpc_subnets(request, vpc_id,aws_region):
     # AWSReport instance 제작
     if len(availability_zones) > 1:
         report = AWSReport(
-            status="FAIL",
+            status="PASS",
             status_extended="VPC has subnets in multiple availability zones",
             check_metadata={"description": "Check if VPC has subnets in multiple availability zones\\n"},
             resource_details=f"VPC ID: {vpc_id}\\n",
@@ -35,8 +35,8 @@ def check_vpc_subnets(request, vpc_id,aws_region):
         )
     else:
         report = AWSReport(
-            status="PASS",
-            status_extended="VPC has subnets in a single availability zone",
+            status="Security Vulnerability Found",
+            status_extended="VPC has subnets in a single availability zone - Vulnerable to security. Place subnets in multiple available areas.",
             check_metadata={"description": "Check if VPC has subnets in multiple availability zones\\n"},
             resource_details=f"VPC ID: {vpc_id}\\n",
             resource_tags=vpc.get('Tags', []),
