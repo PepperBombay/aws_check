@@ -1,6 +1,6 @@
 # iam_policy/views.py
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import JsonResponse
 import boto3
 import json
 
@@ -42,5 +42,8 @@ def Root_MFA_Check(request):
             message += "루트 계정은 MFA를 사용하고 있습니다.<br>"
     else:
         message += "현재 사용자는 루트 계정이 아닙니다.<br>"
-
-    return HttpResponse(message)
+    
+    data = {
+        'message' : message
+    }
+    return JsonResponse(message)
