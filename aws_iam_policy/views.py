@@ -46,4 +46,4 @@ def Root_MFA_Check(request):
     data = {
         'message' : message
     }
-    return JsonResponse(message)
+    return JsonResponse(data)
