@@ -23,5 +23,7 @@ urlpatterns = [
     path('aws-subnet-check/<str:vpc_id>/<str:aws_region>/', views.check_vpc_subnets, name='check_vpc_subnets'),
     path('aws_iam_policy/', include('aws_iam_policy.urls')),
     path('aws_s3_PublicAccess/', include('aws_s3_PublicAccess.urls')),
-    path('aws_ec2_SecurityGroup/', include('aws_ec2_SecurityGroup.urls'))
+    path('aws_ec2_SecurityGroup/', include('aws_ec2_SecurityGroup.urls')),
+    path('aws_ec2_ami/', include('aws_ec2_ami.urls')),
+    path('aws_ec2_instance/', include('aws_ec2_instance.urls')),
 ]

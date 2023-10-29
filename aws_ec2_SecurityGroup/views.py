@@ -22,6 +22,7 @@ def get_security_group_info(request, instance_id):
         security_groups = ec2_client.describe_security_groups(GroupIds=security_group_ids)['SecurityGroups']
 
         security_group_data = []
+        warning_messages = []  # 모든 경고 메시지 리스트
         for security_group in security_groups:
             group_id = security_group['GroupId']
             group_name = security_group['GroupName']
@@ -34,14 +35,23 @@ def get_security_group_info(request, instance_id):
                 'inbound_rules': inbound_rules,
                 'outbound_rules': outbound_rules,
             }
+
+            # 검사 및 경고
+            for rule in inbound_rules:
+                # SSH 트래픽을 허용하는지 확인
+                if rule['IpProtocol'] == 'tcp' and rule['FromPort'] == 22 and rule['ToPort'] == 22:
+                    if any(range['CidrIp'] == '0.0.0.0/0' for range in rule['IpRanges']):
+                        warning_message = '경고: SSH 트래픽 규칙이 모든 IP 허용으로 설정되어 있습니다. 최소한의 IP 범위만 허용하십시오.'
+                        warning_messages.append({'warning': warning_message})
+
+                # RDP 트래픽을 허용하는지 확인
+                if rule['IpProtocol'] == 'tcp' and rule['FromPort'] == 3389 and rule['ToPort'] == 3389:
+                    if any(range['CidrIp'] == '0.0.0.0/0' for range in rule['IpRanges']):
+                        warning_message = '경고: RDP 트래픽 규칙이 모든 IP 허용으로 설정되어 있습니다. 최소한의 IP 범위만 허용하십시오.'
+                        warning_messages.append({'warning': warning_message})
+
+            group_data['warnings'] = warning_messages  # 보안 그룹 데이터에 경고 메시지 추가
             security_group_data.append(group_data)
-            # 경고 메시지 추가
-            if any(rule.get('IpRanges', [{'CidrIp': '0.0.0.0/0'}])[0]['CidrIp'] == '0.0.0.0/0' for rule in
-                   inbound_rules):
-                warning_message = '경고: 인바운드 규칙이 모든 IP 허용으로 설정되어 있습니다. 최소한의 IP만 허용하십시오.'
-                security_group_data.append({'warning': warning_message})
-
-
 
         return JsonResponse({'security_groups': security_group_data})
     except Exception as e:

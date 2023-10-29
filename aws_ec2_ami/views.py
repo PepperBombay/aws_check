@@ -4,7 +4,8 @@ from django.http import JsonResponse
 
 def get_instance_ami_id(instance_id):
     # Boto3 EC2 클라이언트 생성
-    ec2 = boto3.client('ec2')
+
+    ec2 = boto3.client('ec2', region_name='ap-northeast-2')
 
     try:
         # 인스턴스 ID를 사용하여 EC2 인스턴스 정보 조회
@@ -26,7 +27,7 @@ def check_ami_public(request, instance_id):
         result = {"message": "Instance not found or error occurred."}
     else:
         # Boto3 EC2 클라이언트 생성
-        ec2 = boto3.client('ec2')
+        ec2 = boto3.client('ec2', region_name='ap-northeast-2')
 
         try:
             response = ec2.describe_images(ImageIds=[ami_id])
