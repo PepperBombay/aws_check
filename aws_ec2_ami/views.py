@@ -8,7 +8,7 @@ def get_instance_ami_id(instance_id):
     ec2 = boto3.client('ec2', region_name='ap-northeast-2')
 
     try:
-        # 인스턴스 ID를 사용하여 EC2 인스턴스 정보 조회
+        # 인스턴스 IDgit를 사용하여 EC2 인스턴스 정보 조회
         response = ec2.describe_instances(InstanceIds=[instance_id])
 
         if len(response['Reservations']) > 0:
